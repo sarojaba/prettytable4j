@@ -9,7 +9,7 @@ public class PrettyTableTest {
     @Test
     public void testEmpty() {
 
-        PrettyTable pt = new PrettyTable();
+        PrettyTable pt = PrettyTable.fieldNames();
 
         assertEquals("", pt.toString());
     }
@@ -17,7 +17,7 @@ public class PrettyTableTest {
     @Test
     public void testCreate() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -37,7 +37,7 @@ public class PrettyTableTest {
     @Test
     public void testFieldNames() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("City name", "Area", "Population", "ann");
 
         assertEquals("+-----------+------+------------+-----+\n" +
@@ -49,7 +49,7 @@ public class PrettyTableTest {
     @Test
     public void testAddRow() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("City name", "Area", "Population", "ann")
                 .addRow("Adelaide",1295, 1158259, 600.5)
                 .addRow("Brisbane",5905, 1857594, 1146.4)
@@ -75,7 +75,7 @@ public class PrettyTableTest {
     @Test
     public void testComma() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("City name", "Area", "Population", "ann")
                 .addRow("Adelaide",1295, 1158259, 600.5)
                 .addRow("Brisbane",5905, 1857594, 1146.4)
@@ -102,7 +102,7 @@ public class PrettyTableTest {
     @Test
     public void testSortTableByInteger() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -123,7 +123,7 @@ public class PrettyTableTest {
     @Test
     public void testSortTableByIntegerReverse() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -144,7 +144,7 @@ public class PrettyTableTest {
     @Test
     public void testSortTableByFloat() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("City name", "Area", "Population", "ann")
                 .addRow("Adelaide",1295, 1158259, 600.5)
                 .addRow("Brisbane",5905, 1857594, 1146.4)
@@ -171,7 +171,7 @@ public class PrettyTableTest {
     @Test
     public void testDeleteRow() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -201,7 +201,7 @@ public class PrettyTableTest {
     @Test
     public void testClearTable() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -228,7 +228,7 @@ public class PrettyTableTest {
     @Test
     public void testDeleteTable() {
 
-        PrettyTable pt = new PrettyTable()
+        PrettyTable pt = PrettyTable
                 .fieldNames("name", "age", "city")
                 .addRow("john", 22, "new york")
                 .addRow("elizabeth", 43, "chicago")
@@ -247,5 +247,23 @@ public class PrettyTableTest {
         pt.deleteTable();
 
         assertEquals("", pt.toString());
+    }
+
+    @Test
+    public void testBorderless() {
+
+        PrettyTable pt = PrettyTable
+                .fieldNames("name", "age", "city")
+                .addRow("john", 22, "new york")
+                .addRow("elizabeth", 43, "chicago")
+                .addRow("bill", 31, "atlanta")
+                .addRow("mary", 18, "los angeles")
+                .border(false);
+
+        assertEquals("name      age city       \n" +
+                "john       22 new york   \n" +
+                "elizabeth  43 chicago    \n" +
+                "bill       31 atlanta    \n" +
+                "mary       18 los angeles", pt.toString());
     }
 }

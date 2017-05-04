@@ -16,9 +16,14 @@ public class PrettyTable {
 
     private boolean comma = false;
 
-    public PrettyTable fieldNames(String... fieldNames) {
+    private boolean border = true;
+
+    private PrettyTable(String... fieldNames) {
         this.fieldNames.addAll(Arrays.asList(fieldNames));
-        return this;
+    }
+
+    public static PrettyTable fieldNames(String... fieldNames) {
+        return new PrettyTable(fieldNames);
     }
 
     public PrettyTable addRow(Object... row) {
@@ -33,6 +38,11 @@ public class PrettyTable {
 
     public PrettyTable comma(boolean comma) {
         this.comma = comma;
+        return this;
+    }
+
+    public PrettyTable border(boolean border) {
+        this.border = border;
         return this;
     }
 
@@ -84,26 +94,39 @@ public class PrettyTable {
         String line = line(maxWidth);
 
         // Draw top border line
-        sb.append(line);
+        if (border) {
+            sb.append(line);
+            sb.append("\n");
+        }
 
         // Convert headers to table
-        sb.append("\n");
-        sb.append("|");
-
-        for (int i = 0; i < fieldNames.size(); i++) {
-            String nh = StringUtils.rightPad(fieldNames.get(i), maxWidth[i]);
-            sb.append(String.format(" %s ", nh));
+        if (border) {
             sb.append("|");
         }
 
+        for (int i = 0; i < fieldNames.size(); i++) {
+            String nh = StringUtils.rightPad(fieldNames.get(i), maxWidth[i]);
+            sb.append(String.format(border ? " %s " : "%s", nh));
+
+            if(i < fieldNames.size() - 1) {
+                sb.append(border ? "|" : " ");
+            }
+        }
+
         // Draw line
-        sb.append("\n");
-        sb.append(line);
+        if (border) {
+            sb.append("\n");
+            sb.append(line);
+        }
 
         // Convert rows to table
         rows.forEach(r -> {
             sb.append("\n");
-            sb.append("|");
+
+            if (border) {
+                sb.append("|");
+            }
+
             for (int c = 0; c < r.length; c++) {
 
                 String nc;
@@ -116,14 +139,19 @@ public class PrettyTable {
                     nc = StringUtils.rightPad(r[c].toString(), maxWidth[c]);
                 }
 
-                sb.append(String.format(" %s ", nc));
-                sb.append("|");
+                sb.append(String.format(border ? " %s " : "%s", nc));
+
+                if(c < r.length - 1) {
+                    sb.append(border ? "|": " ");
+                }
             }
         });
 
         // Draw bottom border line
-        sb.append("\n");
-        sb.append(line);
+        if (border) {
+            sb.append("\n");
+            sb.append(line);
+        }
 
         return sb.toString();
     }

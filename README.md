@@ -6,7 +6,7 @@ This project is inspired from the Python prettytable module.
 ## Basic Usage
 
 ```java
-PrettyTable pt = new PrettyTable()
+PrettyTable pt = PrettyTable
     .fieldNames("name", "age", "city")
     .addRow("john", 22, "new york")
     .addRow("elizabeth", 43, "chicago")
@@ -83,7 +83,7 @@ System.out.println(pt.toString());
 ## Decimal mark
 
 ```java
-PrettyTable pt = new PrettyTable()
+PrettyTable pt = PrettyTable
     .fieldNames("City name", "Area", "Population", "ann")
     .addRow("Adelaide",1295, 1158259, 600.5)
     .addRow("Brisbane",5905, 1857594, 1146.4)
@@ -109,4 +109,26 @@ System.out.println(pt.toString())
 | Melbourne | 1,566 |  3,806,092 |   646.9 |
 | Perth     | 5,386 |  1,554,769 |   869.4 |
 +-----------+-------+------------+---------+
+```
+
+## Hide border
+
+```java
+PrettyTable pt = PrettyTable
+    .fieldNames("name", "age", "city")
+    .addRow("john", 22, "new york")
+    .addRow("elizabeth", 43, "chicago")
+    .addRow("bill", 31, "atlanta")
+    .addRow("mary", 18, "los angeles")
+    .border(false);
+
+System.out.println(pt.toString());
+```
+
+```
+name      age city       
+john       22 new york   
+elizabeth  43 chicago    
+bill       31 atlanta    
+mary       18 los angeles
 ```

@@ -108,8 +108,12 @@ public class PrettyTable {
             String nh = StringUtils.rightPad(fieldNames.get(i), maxWidth[i]);
             sb.append(String.format(border ? " %s " : "%s", nh));
 
-            if(i < fieldNames.size() - 1) {
-                sb.append(border ? "|" : " ");
+            if (border) {
+                sb.append("|");
+            } else {
+                if(i < fieldNames.size() - 1) {
+                    sb.append(" ");
+                }
             }
         }
 
@@ -141,8 +145,12 @@ public class PrettyTable {
 
                 sb.append(String.format(border ? " %s " : "%s", nc));
 
-                if(c < r.length - 1) {
-                    sb.append(border ? "|": " ");
+                if (border) {
+                    sb.append("|");
+                } else {
+                    if (c < r.length - 1) {
+                        sb.append(" ");
+                    }
                 }
             }
         });

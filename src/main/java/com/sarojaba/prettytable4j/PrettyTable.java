@@ -18,12 +18,16 @@ public class PrettyTable {
 
     private boolean border = true;
 
-    private PrettyTable(String... fieldNames) {
-        this.fieldNames.addAll(Arrays.asList(fieldNames));
+    public static PrettyTable fieldNames(String... fieldNames) {
+        PrettyTable pt = new PrettyTable();
+        pt.fieldNames.addAll(Arrays.asList(fieldNames));
+        return pt;
     }
 
-    public static PrettyTable fieldNames(String... fieldNames) {
-        return new PrettyTable(fieldNames);
+    public static PrettyTable fieldNames(Iterator<String> fieldNames) {
+        PrettyTable pt = new PrettyTable();
+        fieldNames.forEachRemaining(pt.fieldNames::add);
+        return pt;
     }
 
     public PrettyTable addRow(Object... row) {
@@ -33,6 +37,11 @@ public class PrettyTable {
 
     public PrettyTable deleteRow(int num) {
         this.rows.remove(num - 1);
+        return this;
+    }
+
+    public PrettyTable addField(String fieldName) {
+        this.fieldNames.add(fieldName);
         return this;
     }
 

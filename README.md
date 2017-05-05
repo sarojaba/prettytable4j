@@ -132,3 +132,52 @@ elizabeth  43 chicago
 bill       31 atlanta    
 mary       18 los angeles
 ```
+
+## JSON Object
+
+```java
+PrettyTable pt = Parser.parseJson(
+    "{\n" +
+    "  \"name\": \"john\",\n" +
+    "  \"age\": 22,\n" +
+    "  \"city\": \"new york\"\n" +
+    "}");
+
+System.out.println(pt.toString());
+```
+
+```
++------+----------+
+| Name | Value    |
++------+----------+
+| name | john     |
+| age  |       22 |
+| city | new york |
++------+----------+
+```
+
+## JSON Array
+
+```java
+PrettyTable pt = Parser.parseJson(
+    "[{\n" +
+    "  \"name\": \"john\",\n" +
+    "  \"age\": 22,\n" +
+    "  \"city\": \"new york\"\n" +
+    "},{" +
+    "  \"name\": \"elizabeth\",\n" +
+    "  \"age\": 43,\n" +
+    "  \"city\": \"chicago\"\n" +
+    "}]");
+
+System.out.println(pt.toString());
+```
+
+```
++-----------+-----+----------+
+| name      | age | city     |
++-----------+-----+----------+
+| john      |  22 | new york |
+| elizabeth |  43 | chicago  |
++-----------+-----+----------+
+```

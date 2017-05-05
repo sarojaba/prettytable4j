@@ -24,7 +24,8 @@ public class PrettyTableTest {
                 .addRow("bill", 31, "atlanta")
                 .addRow("mary", 18, "los angeles");
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| john      |  22 | new york    |\n" +
@@ -40,7 +41,8 @@ public class PrettyTableTest {
         PrettyTable pt = PrettyTable
                 .fieldNames("City name", "Area", "Population", "ann");
 
-        assertEquals("+-----------+------+------------+-----+\n" +
+        assertEquals(
+                "+-----------+------+------------+-----+\n" +
                 "| City name | Area | Population | ann |\n" +
                 "+-----------+------+------------+-----+\n" +
                 "+-----------+------+------------+-----+", pt.toString());
@@ -59,7 +61,8 @@ public class PrettyTableTest {
                 .addRow("Melbourne", 1566, 3806092, 646.9)
                 .addRow("Perth", 5386, 1554769, 869.4);
 
-        assertEquals("+-----------+------+------------+--------+\n" +
+        assertEquals(
+                "+-----------+------+------------+--------+\n" +
                 "| City name | Area | Population | ann    |\n" +
                 "+-----------+------+------------+--------+\n" +
                 "| Adelaide  | 1295 |    1158259 |  600.5 |\n" +
@@ -86,7 +89,8 @@ public class PrettyTableTest {
                 .addRow("Perth", 5386, 1554769, 869.4)
                 .comma(true);
 
-        assertEquals("+-----------+-------+------------+---------+\n" +
+        assertEquals(
+                "+-----------+-------+------------+---------+\n" +
                 "| City name | Area  | Population | ann     |\n" +
                 "+-----------+-------+------------+---------+\n" +
                 "| Adelaide  | 1,295 |  1,158,259 |   600.5 |\n" +
@@ -110,7 +114,8 @@ public class PrettyTableTest {
                 .addRow("mary", 18, "los angeles")
                 .sortTable("age");
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| mary      |  18 | los angeles |\n" +
@@ -131,7 +136,8 @@ public class PrettyTableTest {
                 .addRow("mary", 18, "los angeles")
                 .sortTable("age", true);
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| elizabeth |  43 | chicago     |\n" +
@@ -155,7 +161,8 @@ public class PrettyTableTest {
                 .addRow("Perth", 5386, 1554769, 869.4)
                 .sortTable("ann");
 
-        assertEquals("+-----------+------+------------+--------+\n" +
+        assertEquals(
+                "+-----------+------+------------+--------+\n" +
                 "| City name | Area | Population | ann    |\n" +
                 "+-----------+------+------------+--------+\n" +
                 "| Adelaide  | 1295 |    1158259 |  600.5 |\n" +
@@ -178,7 +185,8 @@ public class PrettyTableTest {
                 .addRow("bill", 31, "atlanta")
                 .addRow("mary", 18, "los angeles");
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| john      |  22 | new york    |\n" +
@@ -208,7 +216,8 @@ public class PrettyTableTest {
                 .addRow("bill", 31, "atlanta")
                 .addRow("mary", 18, "los angeles");
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| john      |  22 | new york    |\n" +
@@ -219,7 +228,8 @@ public class PrettyTableTest {
 
         pt.clearTable();
 
-        assertEquals("+------+-----+------+\n" +
+        assertEquals(
+                "+------+-----+------+\n" +
                 "| name | age | city |\n" +
                 "+------+-----+------+\n" +
                 "+------+-----+------+", pt.toString());
@@ -235,7 +245,8 @@ public class PrettyTableTest {
                 .addRow("bill", 31, "atlanta")
                 .addRow("mary", 18, "los angeles");
 
-        assertEquals("+-----------+-----+-------------+\n" +
+        assertEquals(
+                "+-----------+-----+-------------+\n" +
                 "| name      | age | city        |\n" +
                 "+-----------+-----+-------------+\n" +
                 "| john      |  22 | new york    |\n" +
@@ -260,7 +271,8 @@ public class PrettyTableTest {
                 .addRow("mary", 18, "los angeles")
                 .border(false);
 
-        assertEquals("name      age city       \n" +
+        assertEquals(
+                "name      age city       \n" +
                 "john       22 new york   \n" +
                 "elizabeth  43 chicago    \n" +
                 "bill       31 atlanta    \n" +

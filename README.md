@@ -1,7 +1,45 @@
 # PrettyTable4J
 
 PrettyTable4J is a CLI based library for printing tables on the console.
-This project is inspired from the Python prettytable module.
+This project is inspired from the Python `prettytable` module.
+
+## How to Install
+
+### Using Maven
+
+Add the JitPack repository to your Maven or Gradle build file.
+And add the dependency.
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.sarojaba</groupId>
+        <artifactId>prettytable4j</artifactId>
+        <version>662a2fb</version>
+    </dependency>
+</dependencies>
+```
+
+### Using Gradle
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencies {
+        compile 'com.github.sarojaba:prettytable4j:662a2fb'
+}
+```
 
 ## Basic Usage
 

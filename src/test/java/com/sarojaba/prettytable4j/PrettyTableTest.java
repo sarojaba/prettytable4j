@@ -278,4 +278,48 @@ public class PrettyTableTest {
                 "bill       31 atlanta    \n" +
                 "mary       18 los angeles", pt.toString());
     }
+
+    @Test
+    public void testBorderColor() {
+        PrettyTable pt = PrettyTable
+                .fieldNames("name", "age", "city")
+                .addRow("john", 22, "new york")
+                .addRow("elizabeth", 43, "chicago")
+                .addRow("bill", 31, "atlanta")
+                .addRow("mary", 18, "los angeles")
+                .color(true)
+                .borderColor("RED");
+
+        assertEquals(
+                "\u001B[31m+-----------+-----+-------------+\n" +
+                "\u001B[0;31m| \u001B[0;39mname     \u001B[0;31m | \u001B[0;39mage\u001B[0;31m | \u001B[0;39mcity       \u001B[0;31m |\u001B[0;31m\n" +
+                "+-----------+-----+-------------+\u001B[0;31m\n" +
+                "\u001B[0;31m| \u001B[0;39mjohn     \u001B[0;31m | \u001B[0;39m 22\u001B[0;31m | \u001B[0;39mnew york   \u001B[0;31m |\u001B[0;31m\n" +
+                "\u001B[0;31m| \u001B[0;39melizabeth\u001B[0;31m | \u001B[0;39m 43\u001B[0;31m | \u001B[0;39mchicago    \u001B[0;31m |\u001B[0;31m\n" +
+                "\u001B[0;31m| \u001B[0;39mbill     \u001B[0;31m | \u001B[0;39m 31\u001B[0;31m | \u001B[0;39matlanta    \u001B[0;31m |\u001B[0;31m\n" +
+                "\u001B[0;31m| \u001B[0;39mmary     \u001B[0;31m | \u001B[0;39m 18\u001B[0;31m | \u001B[0;39mlos angeles\u001B[0;31m |\u001B[0;31m\n" +
+                "+-----------+-----+-------------+\u001B[m", pt.toString());
+    }
+
+    @Test
+    public void testFontColor() {
+        PrettyTable pt = PrettyTable
+                .fieldNames("name", "age", "city")
+                .addRow("john", 22, "new york")
+                .addRow("elizabeth", 43, "chicago")
+                .addRow("bill", 31, "atlanta")
+                .addRow("mary", 18, "los angeles")
+                .color(true)
+                .borderColor("BLUE");
+
+        assertEquals(
+                "\u001B[34m+-----------+-----+-------------+\n" +
+                "\u001B[0;34m| \u001B[0;39mname     \u001B[0;34m | \u001B[0;39mage\u001B[0;34m | \u001B[0;39mcity       \u001B[0;34m |\u001B[0;34m\n" +
+                "+-----------+-----+-------------+\u001B[0;34m\n" +
+                "\u001B[0;34m| \u001B[0;39mjohn     \u001B[0;34m | \u001B[0;39m 22\u001B[0;34m | \u001B[0;39mnew york   \u001B[0;34m |\u001B[0;34m\n" +
+                "\u001B[0;34m| \u001B[0;39melizabeth\u001B[0;34m | \u001B[0;39m 43\u001B[0;34m | \u001B[0;39mchicago    \u001B[0;34m |\u001B[0;34m\n" +
+                "\u001B[0;34m| \u001B[0;39mbill     \u001B[0;34m | \u001B[0;39m 31\u001B[0;34m | \u001B[0;39matlanta    \u001B[0;34m |\u001B[0;34m\n" +
+                "\u001B[0;34m| \u001B[0;39mmary     \u001B[0;34m | \u001B[0;39m 18\u001B[0;34m | \u001B[0;39mlos angeles\u001B[0;34m |\u001B[0;34m\n" +
+                "+-----------+-----+-------------+\u001B[m", pt.toString());
+    }
 }

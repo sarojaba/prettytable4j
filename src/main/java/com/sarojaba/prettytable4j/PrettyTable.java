@@ -18,6 +18,12 @@ public class PrettyTable {
 
     private boolean border = true;
 
+    private boolean color = false;
+
+    private String fontColor = "DEFAULT";
+
+    private String borderColor = "DEFAULT";
+
     public static PrettyTable fieldNames(String... fieldNames) {
         PrettyTable pt = new PrettyTable();
         pt.fieldNames.addAll(Arrays.asList(fieldNames));
@@ -55,6 +61,21 @@ public class PrettyTable {
         return this;
     }
 
+    public PrettyTable color(boolean color) {
+        this.color = color;
+        return this;
+    }
+
+    public PrettyTable fontColor(String colorName) {
+        this.fontColor = colorName;
+        return this;
+    }
+
+    public PrettyTable borderColor(String colorName) {
+        this.borderColor = colorName;
+        return this;
+    }
+
     public PrettyTable sortTable(String fieldName) {
         return sortTable(fieldName, false);
     }
@@ -62,16 +83,13 @@ public class PrettyTable {
     public PrettyTable sortTable(String fieldName, boolean reverse) {
         int idx = Collections.binarySearch(fieldNames, fieldName);
 
-        rows.sort(new Comparator<Object[]>() {
-            @Override
-            public int compare(Object[] o1, Object[] o2) {
+        rows.sort((o1, o2) -> {
 
-                if (o1[idx] instanceof Comparable && o2[idx] instanceof Comparable) {
-                    int c = ((Comparable) o1[idx]).compareTo((Comparable) o2[idx]);
-                    return c * (reverse ? -1 : 1);
-                }
-                return 0;
+            if (o1[idx] instanceof Comparable && o2[idx] instanceof Comparable) {
+                int c = ((Comparable) o1[idx]).compareTo(o2[idx]);
+                return c * (reverse ? -1 : 1);
             }
+            return 0;
         });
 
         return this;
@@ -96,49 +114,35 @@ public class PrettyTable {
             return "";
         }
 
+        Stylist stylist = Stylist.of()
+                .border(border);
+        if (color) {
+            stylist.fontColor(fontColor)
+                    .borderColor(borderColor);
+        }
+
         int[] maxWidth = adjustMaxWidth();
 
-        StringBuilder sb = new StringBuilder();
+        stylist.topBorderLine(maxWidth);
 
-        String line = line(maxWidth);
-
-        // Draw top border line
-        if (border) {
-            sb.append(line);
-            sb.append("\n");
-        }
-
-        // Convert headers to table
-        if (border) {
-            sb.append("|");
-        }
+        stylist.leftBorder();
 
         for (int i = 0; i < fieldNames.size(); i++) {
-            String nh = StringUtils.rightPad(fieldNames.get(i), maxWidth[i]);
-            sb.append(String.format(border ? " %s " : "%s", nh));
+            stylist.af(StringUtils.rightPad(fieldNames.get(i), maxWidth[i]));
 
-            if (border) {
-                sb.append("|");
+            if(i < fieldNames.size() - 1) {
+                stylist.centerBorder();
             } else {
-                if(i < fieldNames.size() - 1) {
-                    sb.append(" ");
-                }
+                stylist.rightBorder();
             }
         }
 
-        // Draw line
-        if (border) {
-            sb.append("\n");
-            sb.append(line);
-        }
+        stylist.bottomBorderLine(maxWidth);
 
         // Convert rows to table
         rows.forEach(r -> {
-            sb.append("\n");
-
-            if (border) {
-                sb.append("|");
-            }
+            stylist.ab("\n");
+            stylist.leftBorder();
 
             for (int c = 0; c < r.length; c++) {
 
@@ -152,25 +156,19 @@ public class PrettyTable {
                     nc = StringUtils.rightPad(r[c].toString(), maxWidth[c]);
                 }
 
-                sb.append(String.format(border ? " %s " : "%s", nc));
+                stylist.af(nc);
 
-                if (border) {
-                    sb.append("|");
+                if(c < r.length - 1) {
+                    stylist.centerBorder();
                 } else {
-                    if (c < r.length - 1) {
-                        sb.append(" ");
-                    }
+                    stylist.rightBorder();
                 }
             }
         });
 
-        // Draw bottom border line
-        if (border) {
-            sb.append("\n");
-            sb.append(line);
-        }
+        stylist.bottomBorderLine(maxWidth);
 
-        return sb.toString();
+        return stylist.toString();
     }
 
     /*
@@ -196,17 +194,5 @@ public class PrettyTable {
                             .orElse(0);
                     return Math.max(fieldNames.get(i).length(), n);
                 }).toArray();
-    }
-
-    private String line(int[] maxWidth) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("+");
-        for (int i = 0; i < fieldNames.size(); i++) {
-            sb.append(StringUtils.rightPad("", maxWidth[i] + 2, '-'));
-            sb.append("+");
-        }
-        return sb.toString();
     }
 }

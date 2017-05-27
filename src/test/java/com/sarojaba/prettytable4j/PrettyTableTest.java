@@ -322,4 +322,18 @@ public class PrettyTableTest {
                 "\u001B[0;34m| \u001B[0;39mmary     \u001B[0;34m | \u001B[0;39m 18\u001B[0;34m | \u001B[0;39mlos angeles\u001B[0;34m |\u001B[0;34m\n" +
                 "+-----------+-----+-------------+\u001B[m", pt.toString());
     }
+
+    @Test
+    public void testLong() {
+        PrettyTable pt = PrettyTable
+                .fieldNames("UTC Time", "UNIX Time")
+                .addRow("Sat May 27 2017 08:42:07", 1495874527097L);
+
+        assertEquals(
+                "+--------------------------+---------------+\n" +
+                "| UTC Time                 | UNIX Time     |\n" +
+                "+--------------------------+---------------+\n" +
+                "| Sat May 27 2017 08:42:07 | 1495874527097 |\n" +
+                "+--------------------------+---------------+", pt.toString());
+    }
 }

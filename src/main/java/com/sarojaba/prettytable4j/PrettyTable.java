@@ -1,7 +1,5 @@
 package com.sarojaba.prettytable4j;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,19 +17,19 @@ import java.util.stream.Stream;
  */
 public class PrettyTable {
 
-    private List<String> fieldNames = new ArrayList<>();
+    List<String> fieldNames = new ArrayList<>();
 
-    private List<Object[]> rows = new ArrayList<>();
+    List<Object[]> rows = new ArrayList<>();
 
-    private boolean comma = false;
+    boolean comma = false;
 
-    private boolean border = true;
+    boolean border = true;
 
-    private boolean color = false;
+    boolean color = false;
 
-    private String fontColor = "DEFAULT";
+    String fontColor = "DEFAULT";
 
-    private String borderColor = "DEFAULT";
+    String borderColor = "DEFAULT";
 
     /**
      * @param fieldNames
@@ -123,74 +121,15 @@ public class PrettyTable {
     @Override
     public String toString() {
 
-        // Check empty
-        if (fieldNames.isEmpty()) {
-            return "";
-        }
+        Converter converter = new ConsoleConverter();
 
-        Stylist stylist = Stylist.of()
-                .border(border);
-        if (color) {
-            stylist.fontColor(fontColor)
-                    .borderColor(borderColor);
-        }
-
-        int[] maxWidth = adjustMaxWidth();
-
-        stylist.topBorderLine(maxWidth);
-
-        stylist.leftBorder();
-
-        for (int i = 0; i < fieldNames.size(); i++) {
-            stylist.af(StringUtils.rightPad(fieldNames.get(i), maxWidth[i]));
-
-            if (i < fieldNames.size() - 1) {
-                stylist.centerBorder();
-            } else {
-                stylist.rightBorder();
-            }
-        }
-
-        stylist.bottomBorderLine(maxWidth);
-
-        // Convert rows to table
-        rows.forEach(r -> {
-            stylist.ab("\n");
-            stylist.leftBorder();
-
-            for (int c = 0; c < r.length; c++) {
-
-                String nc;
-                if (r[c] instanceof Number) {
-                    String n = comma
-                            ? NumberFormat
-                            .getNumberInstance(Locale.US)
-                            .format(r[c])
-                            : r[c].toString();
-                    nc = StringUtils.leftPad(n, maxWidth[c]);
-                } else {
-                    nc = StringUtils.rightPad(r[c].toString(), maxWidth[c]);
-                }
-
-                stylist.af(nc);
-
-                if (c < r.length - 1) {
-                    stylist.centerBorder();
-                } else {
-                    stylist.rightBorder();
-                }
-            }
-        });
-
-        stylist.bottomBorderLine(maxWidth);
-
-        return stylist.toString();
+        return converter.convert(this);
     }
 
     /*
      * Adjust for max width of the column
      */
-    private int[] adjustMaxWidth() {
+    int[] adjustMaxWidth() {
 
         // Adjust comma
         List<List<String>> converted = rows.stream()

@@ -8,9 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Parser {
+/**
+ * Parser class.
+ */
+public final class Parser {
 
-    public static PrettyTable parseJson(String json) throws IOException {
+    /**
+     * Parser.
+     */
+    private Parser() { }
+
+    /**
+     * parseJson.
+     * @param json
+     * @return PrettyTable
+     * @throws IOException
+     */
+    public static PrettyTable parseJson(final String json) throws IOException {
 
         ObjectMapper om = new ObjectMapper();
         JsonNode root = om.readTree(json);
@@ -32,23 +46,27 @@ public class Parser {
 
         } else {
             PrettyTable pt = PrettyTable.fieldNames("Name", "Value");
-            root.fields().forEachRemaining(f -> pt.addRow(f.getKey(), toStr(f)));
+            root.fields().forEachRemaining(
+                    f -> pt.addRow(f.getKey(), toStr(f)));
             return pt;
         }
     }
 
-    private static Object toStr(Map.Entry<String, JsonNode> field) {
+    /**
+     * @param field
+     * @return
+     */
+    private static Object toStr(final Map.Entry<String, JsonNode> field) {
         JsonNode value = field.getValue();
         switch (value.getNodeType()) {
             case STRING:
                 return value.asText();
-            case NUMBER: {
+            case NUMBER:
                 if (value.toString().contains(".")) {
                     return value.asDouble();
                 } else {
                     return value.asInt();
                 }
-            }
 
             default:
                 return value.toString();

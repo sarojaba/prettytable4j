@@ -11,20 +11,23 @@ Add the JitPack repository to your Maven or Gradle build file.
 And add the dependency.
 
 ```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-<dependencies>
-    <dependency>
-        <groupId>com.github.sarojaba</groupId>
-        <artifactId>prettytable4j</artifactId>
-        <version>662a2fb</version>
-    </dependency>
-</dependencies>
+<project>
+    ...
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.github.sarojaba</groupId>
+            <artifactId>prettytable4j</artifactId>
+            <version>662a2fb</version>
+        </dependency>
+    </dependencies>
+</project>
 ```
 
 ### Using Gradle
@@ -51,7 +54,7 @@ PrettyTable pt = PrettyTable
     .addRow("bill", 31, "atlanta")
     .addRow("mary", 18, "los angeles");
 
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -69,7 +72,7 @@ System.out.println(pt.toString());
 
 ```java
 pt.sortTable("age")
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -87,7 +90,7 @@ Also, PrettyTable4J support to sort in descending order.
 
 ```java
 pt.sortTable("age", true);
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -106,7 +109,7 @@ System.out.println(pt.toString());
 ```java
 pt.deleteRow(2).deleteRow(1);
 
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -132,7 +135,7 @@ PrettyTable pt = PrettyTable
     .addRow("Perth", 5386, 1554769, 869.4)
     .comma(true);
 
-System.out.println(pt.toString())        
+System.out.println(pt)        
 ```
 
 ```
@@ -160,7 +163,7 @@ PrettyTable pt = PrettyTable
     .addRow("mary", 18, "los angeles")
     .border(false);
 
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -181,7 +184,7 @@ PrettyTable pt = Parser.parseJson(
     "  \"city\": \"new york\"\n" +
     "}");
 
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -208,7 +211,7 @@ PrettyTable pt = Parser.parseJson(
     "  \"city\": \"chicago\"\n" +
     "}]");
 
-System.out.println(pt.toString());
+System.out.println(pt);
 ```
 
 ```
@@ -218,4 +221,27 @@ System.out.println(pt.toString());
 | john      |  22 | new york |
 | elizabeth |  43 | chicago  |
 +-----------+-----+----------+
+```
+
+## GitHub Flavored Markdown
+
+```java
+PrettyTable pt = PrettyTable
+    .fieldNames("name", "age", "city")
+    .addRow("john", 22, "new york")
+    .addRow("elizabeth", 43, "chicago")
+    .addRow("bill", 31, "atlanta")
+    .addRow("mary", 18, "los angeles")
+    .converter(new GfmConverter());
+
+System.out.println(pt);
+```
+
+```
+| name | age | city |
+| --- | --- | --- |
+| john | 22 | new york |
+| elizabeth | 43 | chicago |
+| bill | 31 | atlanta |
+| mary | 18 | los angeles |
 ```

@@ -31,6 +31,8 @@ public class PrettyTable {
 
     String borderColor = "DEFAULT";
 
+    private Converter converter = new ConsoleConverter();
+
     /**
      * @param fieldNames
      * @return
@@ -87,6 +89,11 @@ public class PrettyTable {
         return this;
     }
 
+    public PrettyTable converter(final Converter converter) {
+        this.converter = converter;
+        return this;
+    }
+
     public PrettyTable sortTable(final String fieldName) {
         return sortTable(fieldName, false);
     }
@@ -120,9 +127,6 @@ public class PrettyTable {
 
     @Override
     public String toString() {
-
-        Converter converter = new ConsoleConverter();
-
         return converter.convert(this);
     }
 

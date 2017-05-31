@@ -245,3 +245,45 @@ System.out.println(pt);
 | bill | 31 | atlanta |
 | mary | 18 | los angeles |
 ```
+
+## HTML
+
+```java
+PrettyTable pt = PrettyTable
+    .fieldNames("name", "age", "city")
+    .addRow("john", 22, "new york")
+    .addRow("elizabeth", 43, "chicago")
+    .addRow("bill", 31, "atlanta")
+    .addRow("mary", 18, "los angeles")
+    .converter(new HtmlConverter());
+```
+
+```html
+<table>
+  <tr>
+    <th>name</th>
+    <th>age</th>
+    <th>city</th>
+  </tr>
+  <tr>
+    <td>john</td>
+    <td>22</td>
+    <td>new york</td>
+  </tr>
+  <tr>
+    <td>elizabeth</td>
+    <td>43</td>
+    <td>chicago</td>
+  </tr>
+  <tr>
+    <td>bill</td>
+    <td>31</td>
+    <td>atlanta</td>
+  </tr>
+  <tr>
+    <td>mary</td>
+    <td>18</td>
+    <td>los angeles</td>
+  </tr>
+</table>
+```

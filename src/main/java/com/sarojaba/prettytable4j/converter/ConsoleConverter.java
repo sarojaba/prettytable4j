@@ -1,5 +1,6 @@
 package com.sarojaba.prettytable4j.converter;
 
+import com.sarojaba.prettytable4j.Bordered;
 import com.sarojaba.prettytable4j.Converter;
 import com.sarojaba.prettytable4j.PrettyTable;
 import org.apache.commons.lang3.StringUtils;
@@ -12,44 +13,53 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ConsoleConverter implements Converter {
+public abstract class ConsoleConverter implements Converter, Bordered {
+
+    private boolean border;
+
+    public ConsoleConverter border(final boolean border) {
+        this.border = border;
+        return this;
+    }
+
+    abstract ConsoleConverter clear();
+
+    abstract ConsoleConverter af(String text);
+
+    abstract ConsoleConverter ab(String text);
+
     @Override
     public String convert(PrettyTable pt) {
+
+        clear();
 
         // Check empty
         if (pt.fieldNames.isEmpty()) {
             return "";
         }
 
-        Stylist stylist = Stylist.of()
-                .border(pt.border);
-        if (pt.color) {
-            stylist.fontColor(pt.fontColor)
-                    .borderColor(pt.borderColor);
-        }
-
         int[] maxWidth = adjustMaxWidth(pt);
 
-        stylist.topBorderLine(maxWidth);
+        topBorderLine(maxWidth);
 
-        stylist.leftBorder();
+        leftBorder();
 
         for (int i = 0; i < pt.fieldNames.size(); i++) {
-            stylist.af(StringUtils.rightPad(pt.fieldNames.get(i), maxWidth[i]));
+            af(StringUtils.rightPad(pt.fieldNames.get(i), maxWidth[i]));
 
             if (i < pt.fieldNames.size() - 1) {
-                stylist.centerBorder();
+                centerBorder();
             } else {
-                stylist.rightBorder();
+                rightBorder();
             }
         }
 
-        stylist.bottomBorderLine(maxWidth);
+        bottomBorderLine(maxWidth);
 
         // Convert rows to table
         pt.rows.forEach(r -> {
-            stylist.ab("\n");
-            stylist.leftBorder();
+            ab("\n");
+            leftBorder();
 
             for (int c = 0; c < r.length; c++) {
 
@@ -65,19 +75,19 @@ public class ConsoleConverter implements Converter {
                     nc = StringUtils.rightPad(r[c].toString(), maxWidth[c]);
                 }
 
-                stylist.af(nc);
+                af(nc);
 
                 if (c < r.length - 1) {
-                    stylist.centerBorder();
+                    centerBorder();
                 } else {
-                    stylist.rightBorder();
+                    rightBorder();
                 }
             }
         });
 
-        stylist.bottomBorderLine(maxWidth);
+        bottomBorderLine(maxWidth);
 
-        return stylist.toString();
+        return toString();
     }
 
     /*
@@ -106,5 +116,42 @@ public class ConsoleConverter implements Converter {
                             .orElse(0);
                     return Math.max(pt.fieldNames.get(i).length(), n);
                 }).toArray();
+    }
+
+    private ConsoleConverter topBorderLine(final int[] maxWidth) {
+        ab(border ? line(maxWidth) + "\n" : "");
+        return this;
+    }
+
+    private ConsoleConverter bottomBorderLine(final int[] maxWidth) {
+        ab(border ? "\n" + line(maxWidth) : "");
+        return this;
+    }
+
+    private ConsoleConverter leftBorder() {
+        ab(border ? "| " : "");
+        return this;
+    }
+
+    private ConsoleConverter rightBorder() {
+        ab(border ? " |" : "");
+        return this;
+    }
+
+    private ConsoleConverter centerBorder() {
+        ab(border ? " | " : " ");
+        return this;
+    }
+
+    private static String line(final int[] maxWidth) {
+
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("+");
+        for (int i = 0; i < maxWidth.length; i++) {
+            sb.append(StringUtils.rightPad("", maxWidth[i] + 2, '-'));
+            sb.append("+");
+        }
+        return sb.toString();
     }
 }

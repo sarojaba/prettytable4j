@@ -1,20 +1,11 @@
 package com.sarojaba.prettytable4j;
 
 import com.sarojaba.prettytable4j.converter.ConsoleConverter;
+import com.sarojaba.prettytable4j.converter.PlainConsoleConverter;
 import com.sarojaba.prettytable4j.parser.JsonParser;
 
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * PrettyTable class.
@@ -37,7 +28,7 @@ public class PrettyTable {
 
     private Parser parser = new JsonParser();
 
-    private Converter converter = new ConsoleConverter();
+    private Converter converter = new PlainConsoleConverter();
 
     /**
      * @param fieldNames
@@ -144,6 +135,17 @@ public class PrettyTable {
 
     @Override
     public String toString() {
+
+        if (converter instanceof Bordered) {
+            ((Bordered) converter).border(border);
+        }
+
+        if (converter instanceof Colored) {
+            ((Colored) converter)
+                    .fontColor(fontColor)
+                    .borderColor(borderColor);
+        }
+
         return converter.convert(this);
     }
 }

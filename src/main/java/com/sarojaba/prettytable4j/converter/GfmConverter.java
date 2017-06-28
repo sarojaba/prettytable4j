@@ -1,4 +1,7 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.converter;
+
+import com.sarojaba.prettytable4j.Converter;
+import com.sarojaba.prettytable4j.PrettyTable;
 
 public class GfmConverter implements Converter {
 

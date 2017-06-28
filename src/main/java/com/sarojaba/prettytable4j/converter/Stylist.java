@@ -1,4 +1,4 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;

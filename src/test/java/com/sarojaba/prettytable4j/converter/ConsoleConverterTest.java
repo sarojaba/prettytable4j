@@ -1,6 +1,7 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.converter;
 
 import com.sarojaba.prettytable4j.PrettyTable;
+import com.sarojaba.prettytable4j.converter.ConsoleConverter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,7 +1,9 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.parser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sarojaba.prettytable4j.Parser;
+import com.sarojaba.prettytable4j.PrettyTable;
 
 import java.io.IOException;
 import java.util.ArrayList;

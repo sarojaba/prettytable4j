@@ -1,5 +1,7 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.converter;
 
+import com.sarojaba.prettytable4j.Converter;
+import com.sarojaba.prettytable4j.PrettyTable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;

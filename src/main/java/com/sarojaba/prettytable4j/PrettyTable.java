@@ -1,5 +1,8 @@
 package com.sarojaba.prettytable4j;
 
+import com.sarojaba.prettytable4j.converter.ConsoleConverter;
+import com.sarojaba.prettytable4j.parser.JsonParser;
+
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -18,19 +21,19 @@ import java.util.stream.Stream;
  */
 public class PrettyTable {
 
-    List<String> fieldNames = new ArrayList<>();
+    public List<String> fieldNames = new ArrayList<>();
 
-    List<Object[]> rows = new ArrayList<>();
+    public List<Object[]> rows = new ArrayList<>();
 
-    boolean comma = false;
+    public boolean comma = false;
 
-    boolean border = true;
+    public boolean border = true;
 
-    boolean color = false;
+    public boolean color = false;
 
-    String fontColor = "DEFAULT";
+    public String fontColor = "DEFAULT";
 
-    String borderColor = "DEFAULT";
+    public String borderColor = "DEFAULT";
 
     private Parser parser = new JsonParser();
 
@@ -147,7 +150,7 @@ public class PrettyTable {
     /*
      * Adjust for max width of the column
      */
-    int[] adjustMaxWidth() {
+    public int[] adjustMaxWidth() {
 
         // Adjust comma
         List<List<String>> converted = rows.stream()

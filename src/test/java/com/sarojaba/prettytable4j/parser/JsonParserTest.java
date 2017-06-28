@@ -1,5 +1,7 @@
-package com.sarojaba.prettytable4j;
+package com.sarojaba.prettytable4j.parser;
 
+import com.sarojaba.prettytable4j.PrettyTable;
+import com.sarojaba.prettytable4j.parser.JsonParser;
 import org.junit.Test;
 
 import java.io.IOException;

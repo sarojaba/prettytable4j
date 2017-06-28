@@ -200,16 +200,18 @@ System.out.println(pt);
 ## JSON Array
 
 ```java
-PrettyTable pt = Parser.parseJson(
-    "[{\n" +
-    "  \"name\": \"john\",\n" +
-    "  \"age\": 22,\n" +
-    "  \"city\": \"new york\"\n" +
-    "},{" +
-    "  \"name\": \"elizabeth\",\n" +
-    "  \"age\": 43,\n" +
-    "  \"city\": \"chicago\"\n" +
-    "}]");
+PrettyTable pt = PrettyTable
+                    .parser(new JsonParser())
+                    .fromString(
+                            "[{\n" +
+                            "  \"name\": \"john\",\n" +
+                            "  \"age\": 22,\n" +
+                            "  \"city\": \"new york\"\n" +
+                            "},{" +
+                            "  \"name\": \"elizabeth\",\n" +
+                            "  \"age\": 43,\n" +
+                            "  \"city\": \"chicago\"\n" +
+                            "}]");
 
 System.out.println(pt);
 ```

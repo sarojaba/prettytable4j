@@ -1,75 +1,11 @@
 package com.sarojaba.prettytable4j;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
- * Parser class.
+ * Interface for Parser.
  */
-public final class Parser {
+public interface Parser {
 
-    /**
-     * Parser.
-     */
-    private Parser() { }
-
-    /**
-     * parseJson.
-     * @param json
-     * @return PrettyTable
-     * @throws IOException
-     */
-    public static PrettyTable parseJson(final String json) throws IOException {
-
-        ObjectMapper om = new ObjectMapper();
-        JsonNode root = om.readTree(json);
-
-        if (root.isArray()) {
-
-            if (root.size() < 1) {
-                return PrettyTable.fieldNames();
-            }
-
-            PrettyTable pt = PrettyTable.fieldNames(root.get(0).fieldNames());
-
-            for (JsonNode c : root) {
-                List<Object> values = new ArrayList<>();
-                c.fields().forEachRemaining(f -> values.add(toStr(f)));
-                pt.addRow(values.toArray());
-            }
-            return pt;
-
-        } else {
-            PrettyTable pt = PrettyTable.fieldNames("Name", "Value");
-            root.fields().forEachRemaining(
-                    f -> pt.addRow(f.getKey(), toStr(f)));
-            return pt;
-        }
-    }
-
-    /**
-     * @param field
-     * @return
-     */
-    private static Object toStr(final Map.Entry<String, JsonNode> field) {
-        JsonNode value = field.getValue();
-        switch (value.getNodeType()) {
-            case STRING:
-                return value.asText();
-            case NUMBER:
-                if (value.toString().contains(".")) {
-                    return value.asDouble();
-                } else {
-                    return value.asInt();
-                }
-
-            default:
-                return value.toString();
-        }
-    }
+    PrettyTable parse(final String text) throws IOException;
 }

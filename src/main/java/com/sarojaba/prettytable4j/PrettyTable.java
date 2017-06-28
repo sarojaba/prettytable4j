@@ -1,5 +1,6 @@
 package com.sarojaba.prettytable4j;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,8 @@ public class PrettyTable {
     String fontColor = "DEFAULT";
 
     String borderColor = "DEFAULT";
+
+    private Parser parser = new JsonParser();
 
     private Converter converter = new ConsoleConverter();
 
@@ -87,6 +90,17 @@ public class PrettyTable {
     public PrettyTable borderColor(final String colorName) {
         this.borderColor = colorName;
         return this;
+    }
+
+    public static PrettyTable parser(final Parser parser) {
+        PrettyTable pt = new PrettyTable();
+        pt.parser = parser;
+        return pt;
+    }
+
+    public PrettyTable fromString(String text) throws IOException {
+        PrettyTable pt = parser.parse(text);
+        return pt;
     }
 
     public PrettyTable converter(final Converter converter) {

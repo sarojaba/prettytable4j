@@ -3,6 +3,16 @@
 PrettyTable4J is a CLI based library for printing tables on the console.
 This project is inspired from the Python `prettytable` module.
 
+## Features
+
+- Simple and easy to use
+- Support parsers
+  - JSON
+- Support multiple converters
+  - Console
+  - GitHub Flavored Markdown
+  - HTML Table
+
 ## How to Install
 
 ### Using Maven
@@ -32,7 +42,7 @@ And add the dependency.
 
 ### Using Gradle
 
-```
+```groovy
 allprojects {
     repositories {
         ...

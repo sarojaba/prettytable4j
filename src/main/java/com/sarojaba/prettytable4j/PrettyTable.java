@@ -146,32 +146,4 @@ public class PrettyTable {
     public String toString() {
         return converter.convert(this);
     }
-
-    /*
-     * Adjust for max width of the column
-     */
-    public int[] adjustMaxWidth() {
-
-        // Adjust comma
-        List<List<String>> converted = rows.stream()
-                .map(r -> Stream.of(r).map(o -> {
-                    if (comma && o instanceof Number) {
-                        return NumberFormat
-                                .getNumberInstance(Locale.US)
-                                .format(o);
-                    } else {
-                        return o.toString();
-                    }
-                }).collect(Collectors.toList()))
-                .collect(Collectors.toList());
-
-        return IntStream.range(0, fieldNames.size())
-                .map(i -> {
-                    int n = converted.stream()
-                            .map(f -> f.get(i).length())
-                            .max(Comparator.naturalOrder())
-                            .orElse(0);
-                    return Math.max(fieldNames.get(i).length(), n);
-                }).toArray();
-    }
 }

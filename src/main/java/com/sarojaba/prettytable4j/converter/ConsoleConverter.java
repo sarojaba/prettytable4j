@@ -5,7 +5,12 @@ import com.sarojaba.prettytable4j.PrettyTable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ConsoleConverter implements Converter {
     @Override
@@ -23,7 +28,7 @@ public class ConsoleConverter implements Converter {
                     .borderColor(pt.borderColor);
         }
 
-        int[] maxWidth = pt.adjustMaxWidth();
+        int[] maxWidth = adjustMaxWidth(pt);
 
         stylist.topBorderLine(maxWidth);
 
@@ -73,5 +78,33 @@ public class ConsoleConverter implements Converter {
         stylist.bottomBorderLine(maxWidth);
 
         return stylist.toString();
+    }
+
+    /*
+     * Adjust for max width of the column
+     */
+    public int[] adjustMaxWidth(PrettyTable pt) {
+
+        // Adjust comma
+        List<List<String>> converted = pt.rows.stream()
+                .map(r -> Stream.of(r).map(o -> {
+                    if (pt.comma && o instanceof Number) {
+                        return NumberFormat
+                                .getNumberInstance(Locale.US)
+                                .format(o);
+                    } else {
+                        return o.toString();
+                    }
+                }).collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
+        return IntStream.range(0, pt.fieldNames.size())
+                .map(i -> {
+                    int n = converted.stream()
+                            .map(f -> f.get(i).length())
+                            .max(Comparator.naturalOrder())
+                            .orElse(0);
+                    return Math.max(pt.fieldNames.get(i).length(), n);
+                }).toArray();
     }
 }
